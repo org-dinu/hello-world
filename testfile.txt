@@ -11,4 +11,4 @@ via pr
 develop branch push to master pr
 
 hotfix commit 2
-not hotfix xommit
+not hotfix commit
