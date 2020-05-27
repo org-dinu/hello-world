@@ -39,3 +39,7 @@ jobs:
       env:
         BASE_BRANCH: ${{ github.head_ref }}
       if: contains(github.head_ref, 'hotfix')
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
