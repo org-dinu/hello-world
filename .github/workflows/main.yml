@@ -27,6 +27,7 @@ jobs:
     - name: Step that prints name of pull request's source branch
       run: |
         echo "Pull request's source branch is: ${HEAD_BRANCH}"
+        echo "Value token is ${VALUE_TOKEN}"
       env:
         HEAD_BRANCH: ${{ github.head_ref }}
         VALUE_TOKEN: ${{ github.token }}
@@ -37,4 +38,4 @@ jobs:
         echo "Hotfix Pull request's source branch is: ${BASE_BRANCH}"
       env:
         BASE_BRANCH: ${{ github.head_ref }}
-      if: startsWith(github.head_ref, 'hotfix**')
+      if: contains(github.head_ref, 'hotfix')
