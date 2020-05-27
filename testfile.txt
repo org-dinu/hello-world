@@ -1,3 +1,4 @@
 test commit file
 another test commit
 issue test commit
+test commit
