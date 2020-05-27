@@ -49,7 +49,7 @@ jobs:
           node-version: 12
       - name: Opening pull request
         id: pull
-        uses: tretuna/sync-branches@1.1.0
+        uses: org-dinu/create-pr@1.0
         with:
           GITHUB_TOKEN: ${{github.token}}
           FROM_BRANCH: "master"
