@@ -26,3 +26,4 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           FROM_BRANCH: "master"
           TO_BRANCH: "develop"
+        if: contains(github.event.head_commit.message, 'hotfix')
