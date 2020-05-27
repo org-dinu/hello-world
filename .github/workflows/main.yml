@@ -5,10 +5,8 @@ name: CI
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  push:
-    branches: [ master ]
   pull_request:
-    branches: [ master ]
+    branches-ignore: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,9 +17,23 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: auto-create-pr-action
-      uses: smartinspereira/auto-create-pr-action@v0.1.0
+    - name: Dump GitHub context
       env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        BRANCH_PREFIX: "hotfix/**"
-        BASE_BRANCH:  "develop"
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    # Runs a set of commands using the runners shell
+    - name: Step that prints name of pull request's source branch
+      run: |
+        echo "Pull request's source branch is: ${HEAD_BRANCH}"
+        echo "Value token is ${VALUE_TOKEN}"
+      env:
+        HEAD_BRANCH: ${{ github.head_ref }}
+        VALUE_TOKEN: ${{ github.token }}
+      if: github.event_name == 'pull_request'
+    # Runs a set of commands using the runners shell
+    - name: Step that prints name of pull request's source branch if hotfix
+      run: |
+        echo "Hotfix Pull request's source branch is: ${BASE_BRANCH}"
+      env:
+        BASE_BRANCH: ${{ github.head_ref }}
+      if: contains(github.head_ref, 'hotfix')
