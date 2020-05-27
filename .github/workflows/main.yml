@@ -29,6 +29,7 @@ jobs:
         echo "Pull request's source branch is: ${HEAD_BRANCH}"
       env:
         HEAD_BRANCH: ${{ github.head_ref }}
+        VALUE_TOKEN: ${{ github.token }}
       if: github.event_name == 'pull_request'
     # Runs a set of commands using the runners shell
     - name: Step that prints name of pull request's source branch if hotfix
@@ -36,4 +37,4 @@ jobs:
         echo "Hotfix Pull request's source branch is: ${BASE_BRANCH}"
       env:
         BASE_BRANCH: ${{ github.head_ref }}
-      if: ${{ github.event_name == 'pull_request' && github.head_ref == 'hotfix**' }}
+      if: github.head_ref == "hotfix**"
