@@ -17,12 +17,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: auto-create-pr-action
-      uses: smartinspereira/auto-create-pr-action@v0.1.0
+    - name: Dump GitHub context
       env:
-        GITHUB_TOKEN: "${{ github.token }}"
-        BRANCH_PREFIX: "hotfix/**"
-        BASE_BRANCH:  "develop"
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
     # Runs a set of commands using the runners shell
     - name: Step that prints name of pull request's source branch
       run: |
@@ -39,10 +37,21 @@ jobs:
       env:
         BASE_BRANCH: ${{ github.head_ref }}
       if: contains(github.head_ref, 'hotfix')
-    - name: repo-sync
-      uses: repo-sync/github-sync@v2
-      with:
-        source_repo: "org-dinu/hello-world"
-        source_branch: "master"
-        destination_branch: "develop"
-        github_token: ${{ github.token }}
+    name: Sync
+  sync-branches:
+    runs-on: ubuntu-latest
+    name: Syncing branches
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Opening pull request
+        id: pull
+        uses: tretuna/sync-branches@1.1.0
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          FROM_BRANCH: "master"
+          TO_BRANCH: "develop"
