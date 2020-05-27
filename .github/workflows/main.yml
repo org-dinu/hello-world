@@ -6,7 +6,7 @@ name: CI
 # events but only for the master branch
 on:
   pull_request:
-    branches: [ master ]
+    branches-ignore: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -37,20 +37,3 @@ jobs:
       env:
         BASE_BRANCH: ${{ github.head_ref }}
       if: contains(github.head_ref, 'hotfix')
-  sync-branches:
-    runs-on: ubuntu-latest
-    name: Syncing branches
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - name: Opening pull request
-        id: pull
-        uses: org-dinu/create-pr@1.0
-        with:
-          GITHUB_TOKEN: ${{github.token}}
-          FROM_BRANCH: "master"
-          TO_BRANCH: "develop"
