@@ -8,3 +8,4 @@ push requesst
 developcommit 
 via pr
 
+develop branch push to master
