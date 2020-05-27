@@ -42,7 +42,7 @@ jobs:
     - name: repo-sync
       uses: repo-sync/github-sync@v2
       with:
-        source_repo: "hello-world"
+        source_repo: "org-dinu/hello-world"
         source_branch: "master"
         destination_branch: "develop"
         github_token: ${{ github.token }}
