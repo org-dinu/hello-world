@@ -1,14 +1,1 @@
-test commit file
-another test commit
-issue test commit
-test commit
-trial commit testing testing
-push requesst
-
-developcommit 
-via pr
-
-develop branch push to master pr
-
-hotfix commit 2
-not hotfix xommit
+hotfix merge to develop

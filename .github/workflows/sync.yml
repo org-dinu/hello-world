@@ -1,29 +1,18 @@
-name: Sync
+name: Merge staging branch to uat
 on:
   push:
     branches:
-      - master
-
+      - 'master'
 jobs:
-  sync-branches:
+  merge-branch:
     runs-on: ubuntu-latest
-    name: Syncing branches
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Dump GitHub context
+      - uses: actions/checkout@master
+      - name: Merge to develop branch
+        uses: devmasx/merge-branch@v1.1.0
+        with:
+          type: now
+          target_branch: 'develop'
         env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Set up Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - name: Opening pull request
-        id: pull
-        uses: tretuna/sync-branches@1.1.0
-        with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          FROM_BRANCH: "master"
-          TO_BRANCH: "develop"
         if: contains(github.event.head_commit.message, 'hotfix')
